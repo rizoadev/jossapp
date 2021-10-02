@@ -1,16 +1,12 @@
-
-
-
-from fastapi import FastAPI
 import uvicorn
+from fastapi import FastAPI
+
 app = FastAPI()
 
 
 @app.get("/")
 async def root():
     return {"message": "325435 asu World"}
-
-
 
 
 if __name__ == "__main__":
