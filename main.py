@@ -5,7 +5,7 @@ app = FastAPI()
 
 
 @app.get("/")
-async def root():
+async def root():a
     return {"message": "2323 asu World"}
 
 
