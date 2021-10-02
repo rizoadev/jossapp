@@ -1,5 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
+from rizapubsub import PubSub
 
 app = FastAPI()
 
