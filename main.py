@@ -6,7 +6,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "oke"}
+    return {"message": "jiancuk"}
 
 
 if __name__ == "__main__":
