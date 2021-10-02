@@ -10,7 +10,7 @@ async def root():
     return {"message": "makcrot cuk"}
 
 
-@app.get("/update")
+@app.post("/update")
 async def update():
 
     c = {
