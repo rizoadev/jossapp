@@ -8,4 +8,4 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "Hasasello asu World"}
+    return {"message": "325435 asu World"}
