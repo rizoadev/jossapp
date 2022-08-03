@@ -1,0 +1,12 @@
+#!/command/with-contenv bash
+s6-setuidgid daemon
+
+cd /home
+
+if [ "$STAGE" == "dev" ]; then
+    echo "RUN WITH ENV: DEV"
+    python -m uvicorn app.main:app --port 6071 --host 0.0.0.0 --workers 1 --reload --proxy-headers --forwarded-allow-ips='*'
+else
+    echo "RUN WITH ENV: PROD"
+    python -m uvicorn app.main:app --port 6071 --host 0.0.0.0 --workers 1 --proxy-headers --forwarded-allow-ips='*'
+fi

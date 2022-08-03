@@ -1,0 +1,25 @@
+FROM python:3.10-slim-buster
+ENV TZ=Asia/Jakarta
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone; \
+    echo "Asia/Jakarta" > /etc/timezone; \
+    dpkg-reconfigure tzdata; \
+    date
+
+RUN apt update -y; \
+    apt install wkhtmltopdf xz-utils curl -y; \
+    rm -rf /var/lib/apt/lists/*
+
+ENV S6_OVERLAY_VERSION=3.1.0.1
+ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
+RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz
+ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz /tmp
+RUN tar -C / -Jxpf /tmp/s6-overlay-x86_64.tar.xz
+
+COPY ./requirements.txt /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt
+
+WORKDIR /home
+COPY ./ /home
+COPY ./conf/s6 /etc/services.d
+
+ENTRYPOINT ["/init"]
